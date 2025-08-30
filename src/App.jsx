@@ -20,14 +20,12 @@ export default function App() {
   const [frequency, setFrequency] = useState(440);
   const [duration, setDuration] = useState(0.15);
 
-  // Costs scale up with each purchase
+  // Costs scale up with each purchase (now doubling each time)
   const multBase = 50;
-  const multScale = 1.5;
   const autoBase = 100;
-  const autoScale = 1.6;
 
-  const multCost = useMemo(() => Math.floor(multBase * Math.pow(multScale, multLevel)), [multLevel]);
-  const autoCost = useMemo(() => Math.floor(autoBase * Math.pow(autoScale, autoCount)), [autoCount]);
+  const multCost = useMemo(() => Math.floor(multBase * Math.pow(2, multLevel)), [multLevel]);
+  const autoCost = useMemo(() => Math.floor(autoBase * Math.pow(2, autoCount)), [autoCount]);
   const cps = useMemo(() => autoCount > 0 ? Math.pow(2, autoCount - 1) : 0, [autoCount]);
 
   // ---------- Persistence ----------
@@ -140,7 +138,7 @@ export default function App() {
     setAutoCount((n) => n + 1);
   };
 
-  const resetAll = () => setShowResetConfirm(True);
+  const resetAll = () => setShowResetConfirm(true);
   const confirmReset = () => {
     setScore(0);
     setPerClick(1);
@@ -195,7 +193,7 @@ export default function App() {
         </div>
 
         <div className="w-full rounded-b-2xl shadow bg-white p-4">
-          {menuTab === "button" and (
+          {menuTab === "button" && (
             <div className="flex flex-col gap-4">
               <div className="grid sm:grid-cols-4 gap-3">
                 <Card label="Score" value={score} big />
@@ -273,7 +271,7 @@ export default function App() {
           <div className="font-semibold mb-1">Try this with your kid:</div>
           <ul className="list-disc list-inside space-y-1">
             <li>Predict how long until you can afford the next upgrade.</li>
-            <li>Change the cost formulas in code (look for <code>multScale</code> and <code>autoScale</code>) and test the difficulty.</li>
+            <li>Change the cost formulas in code (look for <code>multCost</code> and <code>autoCost</code>) and test the difficulty.</li>
             <li>Add a new upgrade: <em>Golden Click</em> that gives a one-time +10 burst.</li>
           </ul>
         </div>
